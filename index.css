@@ -1,0 +1,19 @@
+body {
+    background-color: white;
+}
+
+code {
+    border: 1px solid #fcc;
+    border-radius: 3px;
+    background-color: #fffafa;
+    display: inline-block;
+    padding: 2px 4px;
+}
+
+var {
+    border: 1px solid #ccf;
+    border-radius: 3px;
+    background-color: #fafaff;
+    display: inline-block;
+    padding: 2px 4px;
+}
