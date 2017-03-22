@@ -1,76 +1,84 @@
-MyNum = function(num) {
-    this.num = num;
-    this.boundGET = this.GET.bind(this);
+Person = function(emotion) {
+    this.emotion = emotion;
+    this.boundUseArm = this.useArm.bind(this);
 };
 
-MyNum.prototype.GET = function GET() {
-    return this.num;
+Person.prototype.useArm = function useArm() {
+    if (this == null || this.emotion == null) {
+        return 'disembodied arm?';
+    }
+    switch (this.emotion) {
+        case 'happy': return 'wave';
+        case 'angry': return 'the bird';
+        case 'guilty': return 'cover face';
+        default: throw Error('unknown emotion: ' + this.emotion);
+    }
 };
 
 //////////////////////////////////////////////////////////////////////
 section('1. method()');
 
-one = new MyNum('one');
-console.log('one', one); // inspect it in the console!
+lindsay = new Person('happy');
+console.log('lindsay', lindsay); // inspect it in the console!
 
-log('one.GET()'); // one
-log('one.boundGET()'); // one
+log('lindsay.useArm()'); // wave
+log('lindsay.boundUseArm()'); // wave
 
 //////////////////////////////////////////////////////////////////////
-section('2. hijacked method()');
+section('the bird. hijacked method()');
 
-two = {
-    num: 2,
-    GET: one.GET,
-    boundGET: one.boundGET
+barney = {
+    emotion: 'angry',
+    useArm: lindsay.useArm,
+    boundUseArm: lindsay.boundUseArm
 };
-console.log('two', two); // inspect it in the console!
+console.log('barney', barney); // inspect it in the console!
 
-log('two.GET()'); // 2
-log('two.boundGET()'); // one
+log('barney.useArm()'); // the bird
+log('barney.boundUseArm()'); // wave
 
 //////////////////////////////////////////////////////////////////////
-section('3. hijacked method.call()');
+section('cover face. hijacked method.call()');
 
-log('one.GET.call(two)'); // 2
-log('one.boundGET.call(two)'); // one
+log('lindsay.useArm.call(barney)'); // the bird
+log('lindsay.boundUseArm.call(barney)'); // wave
 
 //////////////////////////////////////////////////////////////////////
 section('4. prototype method.call()');
 
-log('MyNum.prototype.GET.call(two)'); // 2
-log('MyNum.prototype.boundGET.call(two)'); // error!
+log('Person.prototype.useArm.call(barney)'); // the bird
+log('Person.prototype.boundUseArm.call(barney)'); // error!
 
 //////////////////////////////////////////////////////////////////////
 section('5. hijacked prototype method()');
 
-three = {
-    num: 3,
-    GET: MyNum.prototype.GET,
-    boundGET: MyNum.prototype.boundGET // undefined
+brenna = {
+    emotion: 'guilty',
+    useArm: Person.prototype.useArm,
+    boundUseArm: Person.prototype.boundUseArm // undefined
 };
-console.log('three', three); // inspect it in the console!
+console.log('brenna', brenna); // inspect it in the console!
 
-log('three.GET()'); // 3
-log('three.boundGET()'); // error!
+log('brenna.useArm()'); // cover face
+log('brenna.boundUseArm()'); // error!
 
 //////////////////////////////////////////////////////////////////////
 section('6. ripped instance method()');
 
-fGET = one.GET;
-fBoundGET = one.boundGET;
+fUseArm = lindsay.useArm;
+fBoundUseArm = lindsay.boundUseArm;
 
-log('fGET()'); // undefined
-log('fBoundGET()'); // one
+log('fUseArm()'); // disembodied arm?
+log('fBoundUseArm()'); // wave
 
 //////////////////////////////////////////////////////////////////////
 section('7. ripped prototype method()');
 
-pfGET = MyNum.prototype.GET;
-pfBoundGET = MyNum.prototype.boundGET;
+pfUseArm = Person.prototype.useArm;
+pfBoundUseArm = Person.prototype.boundUseArm;
 
-log('pfGET()'); // undefined
-log('pfBoundGET()'); // error!
+log('pfUseArm()'); // disembodied arm?
+log('pfBoundUseArm()'); // error!
 
 //////////////////////////////////////////////////////////////////////
 function log(script) {
