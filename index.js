@@ -25,7 +25,7 @@ log('lindsay.useArm()'); // wave
 log('lindsay.boundUseArm()'); // wave
 
 //////////////////////////////////////////////////////////////////////
-section('the bird. hijacked method()');
+section('2. hijacked method()');
 
 barney = {
     emotion: 'angry',
@@ -38,7 +38,7 @@ log('barney.useArm()'); // the bird
 log('barney.boundUseArm()'); // wave
 
 //////////////////////////////////////////////////////////////////////
-section('cover face. hijacked method.call()');
+section('3. hijacked method.call()');
 
 log('lindsay.useArm.call(barney)'); // the bird
 log('lindsay.boundUseArm.call(barney)'); // wave
